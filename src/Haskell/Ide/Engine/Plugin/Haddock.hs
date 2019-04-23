@@ -175,7 +175,10 @@ renderMarkDown =
          , markupOrderedList =
              T.unlines . zipWith (\i n -> T.pack (show (i :: Int)) <> ". " <> n) [1..]
          , markupDefList = T.unlines . map (\(a, b) -> a <> " :: " <> b)
-         , markupCodeBlock = \x -> "\n```haskell\n" <> removeInner x <> "\n```\n"
+         , markupCodeBlock = \x -> T.unlines
+             ["\n```haskell"
+             ,removeInner x
+             ,"```\n"]
          , markupHyperlink = \h ->
              T.pack $ maybe
                (hyperlinkUrl h)
